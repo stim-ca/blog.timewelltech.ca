@@ -187,9 +187,9 @@ defaultHiddenFromHomePage = false
 
 # Social config about the author
 [params.social]
-GitHub = "https://github.com/stim-ca"
+GitHub = "stim-ca"
 Twitter = ""
-Stackoverflow = "https://stackoverflow.com/users/20939821/stim-ca"
+Stackoverflow = "stim-ca"
 Matrix = ""
 Discord = ""
 DiscordInvite = ""
