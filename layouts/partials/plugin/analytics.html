@@ -1,0 +1,9 @@
+{{- $analytics := .Scratch.Get "analytics" | default dict -}}
+
+{{- if $analytics.enable -}}
+
+{{- /* Plausible Analytics */ -}}
+    {{- with $analytics.plausible.dataDomain -}}
+        {{- dict "Source" "https://analytics.timewelltech.ca/js/script.js" "Async" true "Defer" true "Attr" ($analytics.plausible.dataDomain | printf `data-domain="%v"`) | partial "plugin/script.html" -}}
+    {{- end -}}
+{{- end -}}

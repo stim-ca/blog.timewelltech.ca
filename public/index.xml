@@ -1,0 +1,10 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Timewell Spent</title>
+        <link>http://blog.timewelltech.ca/</link>
+        <description>For learning in the open, and my source of truth for professional devolpment</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>info@timewelltech.ca (Shawn Timewell)</managingEditor>
+            <webMaster>info@timewelltech.ca (Shawn Timewell)</webMaster><copyright>2022 - 2023 Timewell Tech</copyright>
+            <atom:link href="http://blog.timewelltech.ca/index.xml" rel="self" type="application/rss+xml" />
+        </channel>
+</rss>
