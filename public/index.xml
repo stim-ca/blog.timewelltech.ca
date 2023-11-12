@@ -4,7 +4,16 @@
         <link>http://blog.timewelltech.ca/</link>
         <description>For learning in the open, and my source of truth for professional development</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>info@timewelltech.ca (Shawn Timewell)</managingEditor>
-            <webMaster>info@timewelltech.ca (Shawn Timewell)</webMaster><copyright>2022 - 2023 Timewell Tech</copyright>
+            <webMaster>info@timewelltech.ca (Shawn Timewell)</webMaster><copyright>2022 - 2023 Timewell Tech</copyright><lastBuildDate>Sat, 11 Nov 2023 13:19:31 -0800</lastBuildDate>
             <atom:link href="http://blog.timewelltech.ca/index.xml" rel="self" type="application/rss+xml" />
-        </channel>
+        <item>
+    <title>PowerShell Secrets</title>
+    <link>http://blog.timewelltech.ca/powershell-secrets/</link>
+    <pubDate>Sat, 11 Nov 2023 13:19:31 -0800</pubDate>
+    <author>Shawn Timewell</author>
+    <guid>http://blog.timewelltech.ca/powershell-secrets/</guid>
+    <description><![CDATA[PowerShell Secrets Installation Microsoft&rsquo;s Installtion Guide
+Creating a Vault and adding a secret Register SecretVault 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  Read-Host -AsSecureString | Export-Clixml -Path C:\Temp\TTELAB.xml -Force $secureVaultPasswordPath = &#39;C:\Temp\TTELAB.xml&#39; Register-SecretVault -Name TTELAB -ModuleName Microsoft.PowerShell.SecretStore -DefaultVault $vaultUnlockPassword = Import-CliXml -Path $secureVaultPasswordPath Unlock-SecretStore -Password $vaultUnlockPassword $storeConfiguration = @{ Authentication = &#39;Password&#39; PasswordTimeout = 3600 # 1 hour Interaction = &#39;None&#39; Confirm = $false } Set-SecretStoreConfiguration @storeConfiguration   Create a Secret 1 2 3  $TTEESX01 = Get-Credential root Set-Secret -Name &#39;TTE-ESX-01&#39; -Secret $TTEESX01   Use a secret in a script Provisoning a new VM]]></description>
+</item>
+</channel>
 </rss>

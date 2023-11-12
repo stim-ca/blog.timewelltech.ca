@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>PowerShell Secrets - Timewell Spent</title><meta name="Description" content="For learning in the open, and my source of truth for professional development"><meta property="og:title" content="PowerShell Secrets" />
+<meta property="og:description" content="PowerShell Secrets Installation Microsoft&rsquo;s Installtion Guide
+Creating a Vault and adding a secret Register SecretVault 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  Read-Host -AsSecureString | Export-Clixml -Path C:\Temp\TTELAB.xml -Force $secureVaultPasswordPath = &#39;C:\Temp\TTELAB.xml&#39; Register-SecretVault -Name TTELAB -ModuleName Microsoft.PowerShell.SecretStore -DefaultVault $vaultUnlockPassword = Import-CliXml -Path $secureVaultPasswordPath Unlock-SecretStore -Password $vaultUnlockPassword $storeConfiguration = @{ Authentication = &#39;Password&#39; PasswordTimeout = 3600 # 1 hour Interaction = &#39;None&#39; Confirm = $false } Set-SecretStoreConfiguration @storeConfiguration   Create a Secret 1 2 3  $TTEESX01 = Get-Credential root Set-Secret -Name &#39;TTE-ESX-01&#39; -Secret $TTEESX01   Use a secret in a script Provisoning a new VM" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.timewelltech.ca/powershell-secrets/" /><meta property="og:image" content="http://blog.timewelltech.ca/images/avataaars.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-11-11T13:19:31-08:00" />
+<meta property="article:modified_time" content="2023-11-11T13:24:21-08:00" /><meta property="og:site_name" content="Timewell Spent" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://blog.timewelltech.ca/images/avataaars.svg"/>
+
+<meta name="twitter:title" content="PowerShell Secrets"/>
+<meta name="twitter:description" content="PowerShell Secrets Installation Microsoft&rsquo;s Installtion Guide
+Creating a Vault and adding a secret Register SecretVault 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  Read-Host -AsSecureString | Export-Clixml -Path C:\Temp\TTELAB.xml -Force $secureVaultPasswordPath = &#39;C:\Temp\TTELAB.xml&#39; Register-SecretVault -Name TTELAB -ModuleName Microsoft.PowerShell.SecretStore -DefaultVault $vaultUnlockPassword = Import-CliXml -Path $secureVaultPasswordPath Unlock-SecretStore -Password $vaultUnlockPassword $storeConfiguration = @{ Authentication = &#39;Password&#39; PasswordTimeout = 3600 # 1 hour Interaction = &#39;None&#39; Confirm = $false } Set-SecretStoreConfiguration @storeConfiguration   Create a Secret 1 2 3  $TTEESX01 = Get-Credential root Set-Secret -Name &#39;TTE-ESX-01&#39; -Secret $TTEESX01   Use a secret in a script Provisoning a new VM"/>
+<meta name="application-name" content="Timewell Spent">
+<meta name="apple-mobile-web-app-title" content="Timewell Spent"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://blog.timewelltech.ca/powershell-secrets/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "PowerShell Secrets",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/blog.timewelltech.ca\/powershell-secrets\/"
+        },"genre": "posts","wordcount":  279 ,
+        "url": "http:\/\/blog.timewelltech.ca\/powershell-secrets\/","datePublished": "2023-11-11T13:19:31-08:00","dateModified": "2023-11-11T13:24:21-08:00","license": "2022 - 2023 Timewell Tech","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Shawn Timewell"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Timewell Spent">Timewell Spent</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/" title="Posts"> Posts </a><a class="menu-item" href="/tags/" title="Tags"> Tags </a><a class="menu-item" href="/categories/" title="Categories"> Categories </a><a class="menu-item" href="/about/" title="About"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Timewell Spent">Timewell Spent</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="Posts">Posts</a><a class="menu-item" href="/tags/" title="Tags">Tags</a><a class="menu-item" href="/categories/" title="Categories">Categories</a><a class="menu-item" href="/about/" title="About">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">PowerShell Secrets</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Shawn Timewell</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-11-11">2023-11-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;279 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#powershell-secrets-installation">PowerShell Secrets Installation</a></li>
+    <li><a href="#creating-a-vault-and-adding-a-secret">Creating a Vault and adding a secret</a>
+      <ul>
+        <li><a href="#register-secretvault">Register SecretVault</a></li>
+        <li><a href="#create-a-secret">Create a Secret</a></li>
+        <li><a href="#use-a-secret-in-a-script">Use a secret in a script</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="powershell-secrets-installation">PowerShell Secrets Installation</h2>
+<p><a href="https://learn.microsoft.com/en-us/powershell/utility-modules/secretmanagement/get-started/using-secretstore?view=ps-modules" target="_blank" rel="noopener noreffer ">Microsoft&rsquo;s Installtion Guide</a></p>
+<h2 id="creating-a-vault-and-adding-a-secret">Creating a Vault and adding a secret</h2>
+<h3 id="register-secretvault">Register SecretVault</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Read-Host</span> <span class="n">-AsSecureString</span> <span class="p">|</span> <span class="nb">Export-Clixml</span> <span class="n">-Path</span> <span class="n">C:</span><span class="p">\</span><span class="n">Temp</span><span class="p">\</span><span class="n">TTELAB</span><span class="p">.</span><span class="n">xml</span> <span class="n">-Force</span>
+
+<span class="nv">$secureVaultPasswordPath</span> <span class="p">=</span> <span class="s1">&#39;C:\Temp\TTELAB.xml&#39;</span>
+
+<span class="nb">Register-SecretVault</span> <span class="n">-Name</span> <span class="n">TTELAB</span> <span class="n">-ModuleName</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span><span class="p">.</span><span class="n">SecretStore</span> <span class="n">-DefaultVault</span>
+
+<span class="nv">$vaultUnlockPassword</span> <span class="p">=</span> <span class="nb">Import-CliXml</span> <span class="n">-Path</span> <span class="nv">$secureVaultPasswordPath</span>
+
+<span class="nb">Unlock-SecretStore</span> <span class="n">-Password</span> <span class="nv">$vaultUnlockPassword</span>
+
+<span class="nv">$storeConfiguration</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="n">Authentication</span> <span class="p">=</span> <span class="s1">&#39;Password&#39;</span>
+    <span class="n">PasswordTimeout</span> <span class="p">=</span> <span class="n">3600</span> <span class="c"># 1 hour</span>
+    <span class="n">Interaction</span> <span class="p">=</span> <span class="s1">&#39;None&#39;</span>
+    <span class="n">Confirm</span> <span class="p">=</span> <span class="nv">$false</span>
+<span class="p">}</span>
+<span class="nb">Set-SecretStoreConfiguration</span> <span class="nv">@storeConfiguration</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="create-a-secret">Create a Secret</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nv">$TTEESX01</span> <span class="p">=</span> <span class="nb">Get-Credential</span> <span class="n">root</span>
+
+<span class="nb">Set-Secret</span> <span class="n">-Name</span> <span class="s1">&#39;TTE-ESX-01&#39;</span> <span class="n">-Secret</span> <span class="nv">$TTEESX01</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="use-a-secret-in-a-script">Use a secret in a script</h3>
+<p>Provisoning a new VM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="c"># Secret Preamble</span>
+<span class="nv">$secureVaultPasswordPath</span> <span class="p">=</span> <span class="s1">&#39;C:\Temp\TTELAB.xml&#39;</span>
+<span class="nv">$vaultUnlockPassword</span> <span class="p">=</span> <span class="nb">Import-CliXml</span> <span class="n">-Path</span> <span class="nv">$secureVaultPasswordPath</span>
+<span class="nb">Unlock-SecretStore</span> <span class="n">-Password</span> <span class="nv">$vaultUnlockPassword</span>
+<span class="nv">$esxiPassword</span> <span class="p">=</span> <span class="nb">Get-Secret</span> <span class="n">-Name</span> <span class="s1">&#39;TTE-ESX-01&#39;</span>
+
+<span class="c"># Connect to ESXi Host</span>
+<span class="nb">Connect-VIServer</span> <span class="n">-Server</span> <span class="s1">&#39;10.0.1.50&#39;</span> <span class="n">-Credential</span> <span class="nv">$esxiPassword</span>
+
+<span class="c"># First Time only. Can be commented out after</span>
+<span class="nv">$copySource</span> <span class="p">=</span> <span class="s1">&#39;C:\Temp\ISO\Windows Server 2022.iso&#39;</span>
+<span class="nv">$copyDestination</span> <span class="p">=</span> <span class="s1">&#39;vmstores:\10.0.1.50@443\ha-datacenter\data\isos\Windows Server 2022.iso&#39;</span>
+
+<span class="nb">Copy-DatastoreItem</span> <span class="nv">$copySource</span> <span class="nv">$copyDestination</span> <span class="n">-Force</span>
+
+<span class="nv">$newVMArguments</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="nb">CD </span>            <span class="p">=</span> <span class="nv">$true</span>
+    <span class="n">CoresPerSocket</span> <span class="p">=</span> <span class="n">4</span>  
+    <span class="n">Datastore</span>      <span class="p">=</span> <span class="s1">&#39;data&#39;</span>
+    <span class="n">DiskGB</span>         <span class="p">=</span> <span class="n">50</span>
+    <span class="n">GuestId</span>        <span class="p">=</span> <span class="s1">&#39;windows2019srv_64Guest&#39;</span>
+    <span class="n">MemoryGB</span>       <span class="p">=</span> <span class="n">16</span>
+    <span class="n">NetworkName</span>    <span class="p">=</span> <span class="s1">&#39;VM Network&#39;</span>
+    <span class="n">NumCpu</span>         <span class="p">=</span> <span class="n">4</span>
+    <span class="n">Name</span>           <span class="p">=</span> <span class="s1">&#39;TTE-DC-01&#39;</span>
+<span class="p">}</span>
+
+<span class="nb">New-VM</span> <span class="nv">@newVMArguments</span>
+
+<span class="c"># Connect ISO to VM&#39;s CD Drive</span>
+<span class="nb">Get-CDDrive</span> <span class="n">-VM</span> <span class="nv">$newVMArguments</span><span class="p">.</span><span class="n">Name</span> <span class="p">|</span> 
+    <span class="nb">Set-CDDrive</span> <span class="n">-IsoPath</span> <span class="s1">&#39;[data] isos/Windows Server 2022.iso&#39;</span> <span class="n">-StartConnected</span> <span class="nv">$true</span>
+
+<span class="c"># Start VM</span>
+
+<span class="nb">Start-VM</span> <span class="n">-VM</span> <span class="nv">$newVMArguments</span><span class="p">.</span><span class="n">Name</span>
+
+<span class="c"># Open Console Window</span>
+<span class="c"># Note: VMRC must be installed on local machine</span>
+<span class="c"># Otherwise head to the web console</span>
+
+<span class="nb">Open-VMConsoleWindow</span> <span class="n">-VM</span> <span class="nv">$newVMArguments</span><span class="p">.</span><span class="n">Name</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-11-11&nbsp;<a class="git-hash" href="https://github.com/stim-ca/blog.timewelltech.ca/commit/8f3a61f624e011c49af68eb0f64097270cb149f9" target="_blank" title="commit by Stim-ca(Shawn.Timewell@timewelltech.ca) 8f3a61f624e011c49af68eb0f64097270cb149f9: deleted:    Getting_Started_With_Powershell.md new file:   content/posts/PowerShell-Secrets.md">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>8f3a61f</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/powershell-secrets/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://blog.timewelltech.ca/powershell-secrets/" data-title="PowerShell Secrets"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://blog.timewelltech.ca/powershell-secrets/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://blog.timewelltech.ca/powershell-secrets/" data-title="PowerShell Secrets"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="http://blog.timewelltech.ca/powershell-secrets/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://blog.timewelltech.ca/powershell-secrets/" data-title="PowerShell Secrets"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://blog.timewelltech.ca/powershell-secrets/" data-title="PowerShell Secrets"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Shawn Timewell</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript" src="https://plausible.io/js/plausible.js" async defer data-domain="blog.timewelltech.ca"></script></body>
+</html>

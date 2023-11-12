@@ -1,8 +1,5 @@
----
-title: "PowerShell Secrets"
-date: 2023-11-11T13:19:31-08:00
-draft: false
----
+# PowerShell Secrets
+
 
 ## PowerShell Secrets Installation
 
@@ -89,3 +86,4 @@ Start-VM -VM $newVMArguments.Name
 
 Open-VMConsoleWindow -VM $newVMArguments.Name
 ```
+
