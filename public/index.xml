@@ -4,9 +4,17 @@
         <link>http://blog.timewelltech.ca/</link>
         <description>For learning in the open, and my source of truth for professional development</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>info@timewelltech.ca (Shawn Timewell)</managingEditor>
-            <webMaster>info@timewelltech.ca (Shawn Timewell)</webMaster><copyright>2022 - 2023 Timewell Tech</copyright><lastBuildDate>Sat, 11 Nov 2023 13:19:31 -0800</lastBuildDate>
+            <webMaster>info@timewelltech.ca (Shawn Timewell)</webMaster><copyright>2022 - 2023 Timewell Tech</copyright><lastBuildDate>Sun, 12 Nov 2023 17:36:39 -0800</lastBuildDate>
             <atom:link href="http://blog.timewelltech.ca/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>VSphere 8.0 Install</title>
+    <link>http://blog.timewelltech.ca/vsphere-8.0-install/</link>
+    <pubDate>Sun, 12 Nov 2023 17:36:39 -0800</pubDate>
+    <author>Shawn Timewell</author>
+    <guid>http://blog.timewelltech.ca/vsphere-8.0-install/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>PowerShell Secrets</title>
     <link>http://blog.timewelltech.ca/powershell-secrets/</link>
     <pubDate>Sat, 11 Nov 2023 13:19:31 -0800</pubDate>

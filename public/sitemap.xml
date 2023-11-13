@@ -2,8 +2,9 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://blog.timewelltech.ca/posts/</loc><lastmod>2023-11-11T13:24:21-08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://blog.timewelltech.ca/powershell-secrets/</loc><lastmod>2023-11-11T13:24:21-08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://blog.timewelltech.ca/</loc><lastmod>2023-11-11T13:24:21-08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://blog.timewelltech.ca/posts/</loc><lastmod>2023-11-12T17:36:39-08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://blog.timewelltech.ca/</loc><lastmod>2023-11-12T17:36:39-08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://blog.timewelltech.ca/vsphere-8.0-install/</loc><lastmod>2023-11-12T17:36:39-08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://blog.timewelltech.ca/powershell-secrets/</loc><lastmod>2023-11-11T22:02:33-08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://blog.timewelltech.ca/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://blog.timewelltech.ca/tags/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
