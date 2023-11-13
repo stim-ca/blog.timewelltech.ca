@@ -2,6 +2,30 @@
 title: "VSphere 8.0 Install & Configuration"
 date: 2023-11-12T17:36:39-08:00
 draft: false
+tags:
+  - vSphere 8.0
+  - VMware
+  - ESXi
+  - Installation
+  - Configuration
+  - PowerCLI
+  - Virtualization
+  - Datastore
+  - Networking
+  - DNS
+  - IPv6
+  - Root Password
+  - Hardware Compatibility
+  - GUI Installation
+  - VMware PowerCLI
+  - vSphere Installation Guide
+categories:
+  - Virtualization
+  - System Administration
+  - VMware
+  - Tutorials
+  - How-to
+  - IT Infrastructure
 ---
 
 ## Prerequisites
