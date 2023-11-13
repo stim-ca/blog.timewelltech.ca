@@ -91,7 +91,7 @@ $ESXiRoot = Get-Credential root
 ```
 Enter the root password you used during the installation into the dialog box.
 
-![Get-Credential Dialog Box]()
+![Get-Credential Dialog Box](https://github.com/stim-ca/blog.timewelltech.ca/blob/master/static/images/vSphere-8.0-Install/10-Get-Credential.png?raw=true)
 
 
 ```powershell
@@ -100,7 +100,7 @@ Connect-VIServer -Server '10.0.1.107' -Credential $ESXiRoot
 ```
 You'll receive a Certificate warning. Press P to Accept the self-signed certificate Permanently.
 
-![Certificate Warning]()
+![Certificate Warning](https://github.com/stim-ca/blog.timewelltech.ca/blob/master/static/images/vSphere-8.0-Install/11-Certificate-Warning.png?raw=true)
 
 
 After a successful connection you'll see the output below.
@@ -160,7 +160,7 @@ At line:1 char:9
 ```
 After the connection has been lost, check your management console and see if the IP address has been configured.
 
-![Remote Management Console]()
+![Remote Management Console](https://github.com/stim-ca/blog.timewelltech.ca/blob/master/static/images/vSphere-8.0-Install/9-After-First-Reboot.png?raw=true)
 
 You have to disconnect your session with the only IP address `10.0.1.107`.
 
@@ -228,6 +228,8 @@ Name                               FreeSpaceGB      CapacityGB
 data                                 1,113.827       1,115.250
 ```
 
-Next Post I'll be copying ISO's and provisioning VMs for the home-lab
+VMWare's PowerCLI documentation can be found [here.](https://developer.vmware.com/docs/powercli/latest/products/vmwarevsphereandvsan/)
+
+Next Post I'll be copying ISO's and provisioning VMs for the home-lab.
 
 Thank you for reading!
