@@ -31,7 +31,7 @@ categories:
 ## Prerequisites
 
 - Configured ESXi Host
-- Basic PowerShell knowledge
+- Basic PowerShell Knowledge
 - PowerCli Installed
 - Windows Server 2022 Evaluation ISO
   - Download [link](https://www.microsoft.com/en-us/evalcenter/download-windows-server-2022)
@@ -43,7 +43,8 @@ categories:
 
 ```powershell
 $eSXi01Root = Get-Credential root
-
+```
+```powershell
 Connect-VIServer -Server '10.0.1.50' -Credential $eSXi01Root
 ```
 
@@ -77,7 +78,7 @@ WSMan                                  WSMan
 ### Make a Directory to Store the ISOs 
 
 We're going to make a new folder named `iso` on the datastore `data` that we setup in the last post.
-You can use `tab` completion to find your correct path.
+You can use `tab` completion to find the correct path.
 
 ```powershell
 mkdir vmstores:\10.0.1.50@443\ha-datacenter\data\iso
@@ -108,7 +109,7 @@ The transfer time will depend on your network and disk speeds.
 `NetworkName`; We can get this the `Get-VirtualNetwork` command.
 
 ### New-VM
-We're going to use a PowerShell splat to keep the code easier to read. To find all available properties you can use the `Get-Help` command or the [VMWare docs](https://developer.vmware.com/docs/powercli/latest/vmware.vimautomation.core/commands/new-vm/).
+We're going to use a PowerShell Splat to keep the code easier to read. You can read about Splat on Microsoft's [docs](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting?view=powershell-5.1). To find all available properties you can use the `Get-Help` command or the [VMWare docs](https://developer.vmware.com/docs/powercli/latest/vmware.vimautomation.core/commands/new-vm/).
 
 ```PowerShell
 Get-help New-VM -Full
@@ -136,7 +137,7 @@ Name                 PowerState Num CPUs MemoryGB
 TTE-DC-01            PoweredOff 4        16.000
 ```
 
-### Add a Secondary HDD to the VM for User Data
+### Add a Secondary HDD to the VM for the Active Directory Database
 
 ```powershell
 $NewHardDisk_Properties = @{
@@ -155,11 +156,11 @@ CapacityGB      Persistence                                                    F
 40.000          Persistent                            [data] TTE-DC-01/TTE-DC-01_1.vmdk
 ```
 
-### Connect ISO to New VM's CD Drive
+### Connect the ISO to New VM's CD Drive
 
-Use Dot notation to get the VM Name.
+`$NewVM_Properties.Name` Using dot notation to get the VM's Name. 
 
-[data] is how you have to reference the datastore I found this out by looking at the GUI
+`[data]` Is how you have to reference the datastore. I found this out by looking at the GUI
 
 ![GUI Data Path](https://github.com/stim-ca/blog.timewelltech.ca/blob/vSphere-8.0-Continued/static/images/vSphere-8.0-Continued/02-Datastore-Path.png?raw=true)
 
@@ -194,7 +195,7 @@ Name                 PowerState Num CPUs MemoryGB
 TTE-DC-01            PoweredOn  4        16.000
 ```
 
-You must have VMRC installed on your local machine, otherwise head to your webgui.
+You must have VMRC installed on your local machine otherwise head to your web-gui.
 
 ```PowerShell
 Open-VMConsoleWindow -VM $newVMArguments.Name
