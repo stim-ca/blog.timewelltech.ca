@@ -97,6 +97,8 @@ After the installation has completed, remove the installation media. Then press 
 
 After the first reboot has happened, you'll see the following screen. I have DHCP configured so the host was given `10.0.1.107`. We'll be using this in the coming sections.
 
+![After First Reboot](https://github.com/stim-ca/blog.timewelltech.ca/blob/master/static/images/vSphere-8.0-Install/9-After-First-Reboot.png?raw=true)
+
 ## Configuring with PowerCLI
 
 We're going to configure;
@@ -184,7 +186,7 @@ At line:1 char:9
 ```
 After the connection has been lost, check your management console and see if the IP address has been configured.
 
-![Remote Management Console](https://github.com/stim-ca/blog.timewelltech.ca/blob/master/static/images/vSphere-8.0-Install/9-After-First-Reboot.png?raw=true)
+![Remote Management Console](https://github.com/stim-ca/blog.timewelltech.ca/blob/master/static/images/vSphere-8.0-Install/13-After-Static.png?raw=true)
 
 You have to disconnect your session with the only IP address `10.0.1.107`.
 
@@ -251,6 +253,21 @@ Name                               FreeSpaceGB      CapacityGB
 ----                               -----------      ----------
 data                                 1,113.827       1,115.250
 ```
+
+### Restarting the ESXi Host
+
+```powershell
+Get-VMHost | 
+    Restart-VMHost -Force
+```
+```Shell
+Confirm
+Are you sure you want to perform this action?
+Performing the operation "Restart VM host.: Force: True" on target "10.0.1.52".
+[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "Y"):
+```
+Press `Enter` to restart the host.
+
 
 VMWare's PowerCLI documentation can be found [here.](https://developer.vmware.com/docs/powercli/latest/products/vmwarevsphereandvsan/)
 
