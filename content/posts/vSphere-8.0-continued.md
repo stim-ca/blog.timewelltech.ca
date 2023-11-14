@@ -2,6 +2,30 @@
 title: "VSphere 8.0 Continued"
 date: 2023-11-13T11:11:03-08:00
 draft: false
+tags:
+  - vSphere 8.0
+  - VMware
+  - ESXi
+  - PowerShell
+  - PowerCLI
+  - Windows Server 2022
+  - VMRC
+  - Datastore
+  - ISO
+  - Virtual Machine
+  - Provisioning
+  - Virtual Network
+  - New-VM
+  - New-HardDisk
+  - CDDrive
+  - Virtual Console
+categories:
+  - Virtualization
+  - System Administration
+  - VMware
+  - Tutorials
+  - How-to
+  - IT Infrastructure
 ---
 
 ## Prerequisites
@@ -67,7 +91,7 @@ The command we're going to use is `Copy-DatastoreItem`. It requires an `Item` so
 Copy-DatastoreItem -Item 'C:\Temp\ISO\Windows Server 2022.iso' -Destination 'vmstores:\10.0.1.50@443\ha-datacenter\data\iso\Windows Server 2022.iso' -Force
 ```
 
-![Datastore Progress Bar]()
+![Datastore Progress Bar](https://github.com/stim-ca/blog.timewelltech.ca/blob/vSphere-8.0-Continued/static/images/vSphere-8.0-Continued/01-Copy-DatastoreItem-Progress-Bar.png?raw=true)
 
 The transfer time will depend on your network and disk speeds.
 
@@ -137,7 +161,7 @@ Use Dot notation to get the VM Name.
 
 [data] is how you have to reference the datastore I found this out by looking at the GUI
 
-![GUI Data Path]()
+![GUI Data Path](https://github.com/stim-ca/blog.timewelltech.ca/blob/vSphere-8.0-Continued/static/images/vSphere-8.0-Continued/02-Datastore-Path.png?raw=true)
 
 ```powershell
 Get-CDDrive -VM $NewVM_Properties.Name | 
@@ -176,5 +200,9 @@ You must have VMRC installed on your local machine, otherwise head to your webgu
 Open-VMConsoleWindow -VM $newVMArguments.Name
 ```
 
+A remote console will appear.
+
+![VMRC](https://github.com/stim-ca/blog.timewelltech.ca/blob/vSphere-8.0-Continued/static/images/vSphere-8.0-Continued/03-Virtual-Console-First-Boot.png?raw=true)
 
 
+Next post we're going to be configuring the Primary Domain Controller.
